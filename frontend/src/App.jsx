@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Navbar from '../src/components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
+import Cart from './pages/Cart/Cart'
 
 
 
