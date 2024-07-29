@@ -1,49 +1,104 @@
-import "./LoginPopup.css";
-import { useState } from "react";
-import { assets } from "../../assets/assets";
+import React, { useState } from 'react'
+import './LoginPopup.css'
+import { assets } from '../../assets/assets'
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { StoreContext } from '../../context/StoreContext';
+import axios from "axios";
 
-function LoginPopup({ setShowLogin }) {
-  const [currentState, setCurrentState] = useState("Log In");
 
+ function LoginPopup({ setShowLogin })  {
+  const [CurrState, SetCurrState] = useState("Sign Up");
+  const { url, setToken } = useContext(StoreContext);
+
+  const[data,Setdata]=useState({
+    name:"",
+    email:"",
+    password:""
+  })
+  const onChangeHandler=(event)=>{
+    const name= event.target.name
+    const value= event.target.value
+    Setdata(data=>({...data,[name]:value}))
+  }
+
+    const onLogin = async (event)=>{
+      event.preventDefault()
+      let newUrl = url;
+      if(CurrState==="Login"){
+        newUrl+="/api/user/login"
+      }
+      else{
+        newUrl+="/api/user/signup"
+      }
+      const response= await axios.post(newUrl,data)
+      if(response.data.success){
+        setToken(response.data.token)
+        localStorage.setItem("token",response.data.token)
+        setShowLogin(false)
+      }
+      else{
+        alert(response.data.message)
+      }
+    }
+  
   return (
     <div className="login-popup">
-      <form className="login-popup-container">
+      <form onSubmit={onLogin} className="login-popup-container">
         <div className="login-popup-title">
-          <h2>{currentState}</h2>
+          <h2>{CurrState}</h2>
           <img
             onClick={() => setShowLogin(false)}
             src={assets.cross_icon}
             alt=""
           />
         </div>
-        <div className="login-popup-inputs">
-          {currentState === "Log In" ? (
+        <div className="login-popup-input">
+          {CurrState === "Login" ? (
             <></>
-          ) : (
-            <input type="text" placeholder="Your Name" required />
-          )}
-          <input type="email" placeholder="Your Email" required />
-          <input type="password" placeholder="password" required />
+          ) : 
+            <input
+              name="name"
+              onChange={onChangeHandler}
+              value={data.name}
+              type="text"
+              placeholder="your name"
+            />
+          }
+          <input
+            name="email"
+            onChange={onChangeHandler}
+            value={data.email}
+            type="email"
+            placeholder="your email"
+          />
+          <input
+            name="password"
+            onChange={onChangeHandler}
+            value={data.password}
+            type="password"
+            placeholder="password"
+          />
         </div>
-        <button>
-          {currentState === "Sign Up" ? "Create Account" : "Log In"}
-        </button>
+        <button type='submit' >{CurrState === "Sign Up" ? "create acount" : "Login"}</button>
         <div className="login-popup-condition">
           <input type="checkbox" required />
-          <p>By continuing, I agree to the terms of use and privacy policy.</p>
+          <p>by continuing agreeing the term and the condition policy</p>
         </div>
-        {currentState === "Log In" ? (
+        {CurrState === "Login" ? (
           <p>
-            Create a new account? <span onClick={() => setCurrentState('Sign Up')} >Click Here</span>
+            Create a new account?{" "}
+            <span onClick={() => SetCurrState("Sign Up")}>click here</span>
           </p>
         ) : (
           <p>
-            Already have an account? <span onClick={() => setCurrentState('Log In')} >Login Here</span>
+            aldready have an account?{" "}
+            <span onClick={() => SetCurrState("Login")}>click here</span>
           </p>
         )}
       </form>
     </div>
   );
-}
+};
 
-export default LoginPopup;
+export default LoginPopup
