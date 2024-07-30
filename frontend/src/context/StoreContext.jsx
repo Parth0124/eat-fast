@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { food_list } from '../assets/assets';
 
 export const StoreContext = createContext(null);
@@ -20,6 +20,14 @@ const StoreContextProvider = ({ children }) => {
       return updatedCart;
     });
   };
+
+  useEffect(() => {
+    if(localStorage.getItem('token'))
+    {
+      setToken(localStorage.getItem('token'));
+    }
+    
+  }, [])
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
