@@ -80,24 +80,24 @@ const userOrders = async(req,res)=>{
 }
 
 // //listing orders from admin panel
-// const listOrders= async(req,res)=>{
-//     try {
-//         const orders = await orderModel.find({})
-//         res.json({success:true,data:orders})
-//     } catch (error) {
-//         console.log(error)
-//         res.json({success:false,message:"Error"})
-//     }
-// }
+const listOrders= async(req,res)=>{
+    try {
+        const orders = await orderModel.find({})
+        res.json({success:true,data:orders})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
+}
 
 // //api for updating order status
-// const updateStatus = async(req,res)=>{
-//     try {
-//         await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
-//         res.json({success:true,message:"status Updated"})
-//     } catch (error) {
-//         console.log(error);
-//         res.json({success:false,message:"ERROR"})
-//     }
-// }
-export {placeOrder, verifyOrder, userOrders};
+const updateStatus = async(req,res)=>{
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
+        res.json({success:true,message:"status Updated"})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"ERROR"})
+    }
+}
+export {placeOrder, verifyOrder, userOrders, listOrders, updateStatus};
