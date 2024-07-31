@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
- const url = "http://localhost:4000"
+ const url = "https://eat-fast-1.onrender.com"
 
   return (
     <div>
