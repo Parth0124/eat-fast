@@ -30,5 +30,3 @@ Eat Fast is a fully responsive food ordering web application built using the MER
 - **Backend**: Node.js, Express, 
 - **Database**: MongoDB
 - **Deployment**: Vercel (both client and admin portals), Render(for the backend)
-
-
