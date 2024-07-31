@@ -3,7 +3,7 @@ import "./Verify.css"
 import{useSearchParams,useNavigate} from 'react-router-dom'
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
-const Verify = () => {
+function Verify() {
     const [searchParams,setSearchParams]=useSearchParams();
     const success = searchParams.get("success");
     const orderId = searchParams.get("orderId");

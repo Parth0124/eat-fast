@@ -27,15 +27,10 @@ const navigate = useNavigate();
     setData(data=>({...data,[name]:value}))
   }
 
-  console.log('Token:', token);
-
   useEffect(() => {
-    console.log('Token:', token);
     if (!token) {
-      console.log('no token');
       navigate("/cart");
     } else if (getTotalCartAmount() === 0) {
-      console.log('no items in cart');
       navigate("/cart");
     }
   }, [token]);
